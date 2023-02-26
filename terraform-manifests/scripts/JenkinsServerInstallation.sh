@@ -31,7 +31,7 @@ amazon-linux-extras install docker -y
 # Start the Docker service.
 service docker start
 # Add the ansibleadmin to the docker group so you can execute Docker commands without using sudo.
-usermod -a -G docker ansibleadmin
+usermod -a -G docker ec2-user
 # Configure Docker to start on boot
 sudo systemctl enable docker
 sudo yum install python2-pip
