@@ -4,13 +4,13 @@ pipeline{
         VERSION = "${env.BUILD_ID}"
     }
     stages{
-        agent{
-            docker {
-                image 'maven'
-                args '-v $HOME/.m2:/root/.m2'
-            }
-        }
         stage("Quality Gate Status Check"){
+            agent{
+                docker {
+                    image 'maven'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
             steps{
                 script {
                     withSonarQubeEnv('sonarserver') {
