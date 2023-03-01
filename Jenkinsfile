@@ -1,14 +1,15 @@
 pipeline{
-    agent{
-        docker {
-            image 'maven'
-            args '-v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent any
     environment{
         VERSION = "${env.BUILD_ID}"
     }
     stages{
+        agent{
+            docker {
+                image 'maven'
+                args '-v $HOME/.m2:/root/.m2'
+            }
+        }
         stage("Quality Gate Status Check"){
             steps{
                 script {
