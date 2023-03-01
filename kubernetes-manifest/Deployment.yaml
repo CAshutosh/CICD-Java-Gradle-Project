@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: WebApp-Deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp-container
+        image: http://44.200.233.221:8081/webapp:image_tag
+        imagePullPolicy: Always
+        ports:
+            - name: http
+              containerPort: 8080
+    strategy:
+      type: RollingUpdate
+  replicas: 3
+
+  kubernetes-manifest\Deployment.yaml
