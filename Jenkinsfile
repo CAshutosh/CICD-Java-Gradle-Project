@@ -26,7 +26,7 @@ pipeline{
                 }
             }
         }
-        stage("docker build & docker push"){
+        stage("Docker build & Docker push"){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'nexus_pass', variable: 'nexus_password')]) {
@@ -37,6 +37,17 @@ pipeline{
                             docker rmi 44.200.233.221:8083/webapp:${VERSION}
                         '''
                     }
+                }
+            }
+        }
+        stage("Deploy"){
+            steps{
+                script{
+                    sh '''
+                        tag=$(echo ${VERSION} | tr -d ' ')
+                        sed -i "s/image_tag/$tag/g" /kubernetes-manifest/Deployment.yaml
+                    '''
+                    ansiblePlaybook become: true, installation: 'ansible', inventory: 'hosts', playbook: 'Ansible.yaml'
                 }
             }
         }
