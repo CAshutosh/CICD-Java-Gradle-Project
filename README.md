@@ -13,4 +13,4 @@ The final stage of the pipeline deploys the application to a Kubernetes cluster 
 
 We are using Terraform to provision our infrastructure.
 
-![MicrosoftTeams-image (34)](https://user-images.githubusercontent.com/123365436/222364108-d8c23a85-6f96-4a87-8857-2e500be4354b.png)
+![MicrosoftTeams-image (36)](https://user-images.githubusercontent.com/123365436/222377867-f74c13b8-83e5-4c2f-8b09-04fd260cf0d4.png)
