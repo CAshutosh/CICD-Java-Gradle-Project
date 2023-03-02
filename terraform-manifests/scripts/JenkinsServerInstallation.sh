@@ -41,21 +41,25 @@ sudo pip install docker-py
 
 
 
-# Install Helm
-# Install required packages
-sudo yum install -y curl
-# Download the Helm installation script
-curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
-# Make the script executable
-chmod +x get_helm.sh
-# Install Helm
-./get_helm.sh
+# install ansible
+yum-config-manager --enable epel
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install epel-release-latest-7.noarch.rpm
+yum update -y
+yum install python python-devel python-pip openssl ansible -y
 
+sudo su -
 
-# Install datree helm plugin
-# Download the Datree Helm plugin installation script
-curl https://get.datree.io/helm-plugin-install.sh > helm-plugin-install.sh
-# Make the script executable
-chmod +x helm-plugin-install.sh
-# Install the Datree Helm plugin
-./helm-plugin-install.sh
+# add the user ansible admin
+sudo useradd ansibleadmin
+
+# set password : the below command will avoid re entering the password
+sudo echo "ansibleansible" | passwd --stdin ansibleadmin
+
+# modify the sudoers file at /etc/sudoers and add entry
+echo 'ansibleadmin     ALL=(ALL)      NOPASSWD: ALL' | sudo tee -a /etc/sudoers
+echo 'ec2-user     ALL=(ALL)      NOPASSWD: ALL' | sudo tee -a /etc/sudoers
+
+# the below sed command will find and replace words with spaces "PasswordAuthentication no" to "PasswordAuthentication yes"
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sudo service sshd restart
